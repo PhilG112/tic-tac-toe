@@ -1,0 +1,32 @@
+header {
+    margin: 30px auto 40px auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 70px;
+}
+
+.container {
+    border: 1px solid black;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+.game-board {
+    height: 600px;
+    display: table;
+    border-spacing: 5px;
+    margin: 0 auto;
+}
+
+.row {
+    border: 1px solid blue;
+    display: table-row;
+}
+
+.game-square {
+    display: table-cell;
+    border: 2px solid red;
+    width: 300px;
+}
