@@ -1,9 +1,4 @@
 // $(document).ready(function() {
-    // ------- GLOBAL VARIABLES ---------
-    
-
-    // ---------------------------
-
     // ------- OBJECTS -----------
     var Player = {
         playerFactory: function(name) {
@@ -56,7 +51,7 @@
             }
         }
     };
-    console.log(playGame.player1("p1"));
-    console.log(playGame.player2("p2"));
+    console.log(main.player1("p1"));
+    console.log(main.player2("p2"));
     gameBoard.$gameSquare.on("click", gameBoard.toggleSquare);
 // }); 
