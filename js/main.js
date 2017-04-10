@@ -4,7 +4,8 @@
         playerFactory: function(name) {
             var player = {};
             player.name = name;
-            player.isTurn = false;
+            player.isTurn = true;
+            player.moves = [];
             return player;
         }
     };
@@ -16,42 +17,35 @@
         }
     };
 
-    var Ai = {
-        aiFactory: function(name) {
-            var ai = Player.playerFactory(name); // Base call
-            return ai;
-        }
-    };
-
-    var gameBoard = {
+    var Main = { 
         $gameSquare: $(".game-square"),
-        toggleSquare: function() {
-            $(this).css({
-                backgroundColor: "gray"
-            });
-        }
-    };
-
-    var main = { 
-        player1: function(name) {
-            var p1 = Human.humanFactory(name);
-            p1.isTurn = true;
-            return p1;
-        },
-        player2: function(name) {
-            var p2 = Human.humanFactory(name);
-            return p2;
-        },
+        board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        player1: new Human.humanFactory("Player1"),
+        player2: new Human.humanFactory("Player2"),
 
         checkTurn: function() {
-            if(this.player1().isTurn === true){
-                console.log("Player 1 turn");
-            } else {
-                console.log("Player 2 turn");
+            if(Main.player1.isTurn) {
+                $(this).css({
+                    backgroundColor: "blue"
+                });
+                Main.player1.isTurn = false;
+                Main.addPlayerMove(Main.player1);
+            } else {           
+                $(this).css({
+                    backgroundColor: "red"
+                });
+                Main.player1.isTurn = true;
+                Main.addPlayerMove(Main.player2);
             }
+        },
+
+        addPlayerMove: function(player) {
+            player.moves.push(1);
+            console.log(player.moves);
         }
     };
-    console.log(main.player1("p1"));
-    console.log(main.player2("p2"));
-    gameBoard.$gameSquare.on("click", gameBoard.toggleSquare);
+    
+    console.log(Main.player1);
+    console.log(Main.player2);
+    Main.$gameSquare.on("click", Main.checkTurn);
 // }); 
