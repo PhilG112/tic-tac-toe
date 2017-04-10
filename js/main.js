@@ -1,6 +1,6 @@
 // $(document).ready(function() {
     // ------- OBJECTS -----------
-    var Player = {
+    var Player = {  
         playerFactory: function(name) {
             var player = {};
             player.name = name;
@@ -19,7 +19,16 @@
 
     var Main = { 
         $gameSquare: $(".game-square"),
-        board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        winnings: [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ],
         player1: new Human.humanFactory("Player1"),
         player2: new Human.humanFactory("Player2"),
 
@@ -48,4 +57,6 @@
     console.log(Main.player1);
     console.log(Main.player2);
     Main.$gameSquare.on("click", Main.checkTurn);
+
+    console.log($(".game-square").val());
 // }); 
