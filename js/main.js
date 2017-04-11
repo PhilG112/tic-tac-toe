@@ -1,10 +1,11 @@
-// $(document).ready(function() {
-    // ------- OBJECTS -----------
+$(document).ready(function() {
+    //------- CORE FUNCTIONALITY -----------
     var Player = {  
         playerFactory: function(name) {
             var player = {};
             player.name = name;
             player.moves = [];
+            player.winCount = 0;
             return player;
         }
     };
@@ -13,6 +14,13 @@
         humanFactory: function(name) {
             var human = Player.playerFactory(name); // Base call
             return human;
+        }
+    };
+
+    var Ai = {
+        aiFactory: function(name) {
+            var ai = Player.playerFactory(name);
+            return ai;
         }
     };
 
@@ -28,47 +36,56 @@
             [0,4,8],
             [2,4,6]
         ],
-        player1: new Human.humanFactory("Player1"),
-        player2: new Human.humanFactory("Player2"),
+        player1: new Human.humanFactory("Player 1"),
+        player2: new Human.humanFactory("Player 2"),
         turn: true,
 
         proccessTurn: function() { 
             if(Main.turn) {
                 $(this).css({
-                    backgroundColor: "blue"
+                    backgroundImage: "url('./assets/pacman.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center"
                 });
                 Main.turn = false;
-                var p1Move = parseInt($(this).attr("data-value"));
-                Main.player1.moves.push(p1Move);
+                Main.player1.moves.push(parseInt($(this).attr("data-value")));
                 Main.checkWinCondition(Main.player1);
             } else {           
                 $(this).css({
-                    backgroundColor: "red"
+                    backgroundImage: "url('./assets/ghost.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center"
                 });
                 Main.turn = true;
-                var p2Move = parseInt($(this).attr("data-value"));
-                Main.player2.moves.push(p2Move);
+                Main.player2.moves.push(parseInt($(this).attr("data-value")));
                 Main.checkWinCondition(Main.player2);
             }
         },
 
         checkWinCondition: function(player) {
-            var gameOver = false;
+            // TODO: Create 'draw' functionality
             if(player.moves.length >= 3) {
                 for(var i=0; i < this.winnings.length; i++) {
-                    var x = player.moves.filter(function(elem) {
-                                return Main.winnings[i].indexOf(elem) > -1;
-                            }).length == Main.winnings[i].length;
-                    if(x) {
-                        console.log(player.name, "WINNER");
-                        gameOver = true;
-                    } 
+                    var winCheck = player.moves.filter(function(value) {
+                        return Main.winnings[i].indexOf(value) > -1;
+                    }).length == Main.winnings[i].length;
+                    if(winCheck) { 
+                        player.winCount++;                   
+                        Main.resetGame();
+                    }
                 }
             }
+        },
+
+        resetGame: function() {
+            console.log("Game reset");
+            this.player1.moves = [];
+            this.player2.moves = [];
+            this.$gameSquare.css({backgroundImage: "none"});
+            Main.$gameSquare.off();
+            Main.$gameSquare.one("click", Main.proccessTurn);
         }       
     };
-    
     Main.$gameSquare.one("click", Main.proccessTurn);
 
-
-// }); 
+}); 

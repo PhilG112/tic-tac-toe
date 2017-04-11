@@ -1,14 +1,13 @@
 header {
-    margin: 30px auto 40px auto;
+    margin: 30px auto 20px auto;
     text-align: center;
 }
 
 h1 {
-    font-size: 70px;
+    font-size: 60px;
 }
 
 .container {
-    border: 1px solid black;
     max-width: 940px;
     margin: 0 auto;
 }
@@ -29,4 +28,14 @@ h1 {
     display: table-cell;
     border: 2px solid red;
     width: 300px;
+}
+
+.player {
+    padding: 10px;
+    display: inline-block;
+    font-size: 30px;
+}
+
+.player2 {
+    float: right;
 }
