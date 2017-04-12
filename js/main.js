@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     //------- CORE FUNCTIONALITY -----------
     var Player = {  
@@ -70,16 +71,15 @@ $(document).ready(function() {
 
         checkWinCondition: function(player) {
             // TODO: Implement draw functionality
-            if(player.moves.length >= 3) {
-                for(var i=0; i < this.winnings.length; i++) {
-                    var winCheck = player.moves.filter(function(value) {
-                        return Main.winnings[i].indexOf(value) > -1;
-                    }).length == Main.winnings[i].length;
-                    if(winCheck) { 
-                        player.winCount++;
-                        Main.outputWinner(player);
-                        Main.$gameSquare.off();
-                    }
+            var pMoves = player.moves.length;
+            for(var i=0; i < this.winnings.length; i++) {
+                var winCheck = player.moves.filter(function(value) {
+                    return Main.winnings[i].indexOf(value) > -1;
+                }).length == Main.winnings[i].length;
+                if(winCheck) { 
+                    player.winCount++;
+                    Main.outputWinner(player);
+                    Main.$gameSquare.off();
                 }
             }
         },
@@ -106,16 +106,26 @@ $(document).ready(function() {
     //------UI CONTROLS-------
     Main.$gameSquare.one("click", Main.proccessTurn);
 
-    var $resetBtn = $("#reset-btn");
+    var $resetBtn = $("#reset-game");
     $resetBtn.on("click", Main.resetGame);
-    
-    var $humanSelection = $(".human-btn");
-    $humanSelection.on("click", function() {
-        // TODO: Construct human player
-    });
 
-    var $aiSelection = $(".ai-btn");
-    $aiSelection.on("click", function() {
-        // TODO: Construct ai player
-    });
+    var $resetScores = $("#reset-count");
+    $resetScores.on("click", function() {
+        var p1WinCounter = $("#p1-score");
+        var p2WinCounter = $("#p2-score");
+        Main.player1.winCount = 0;
+        Main.player2.winCount = 0;
+        p1WinCounter.text("0");
+        p2WinCounter.text("0");
+    })
+    
+    // var $humanSelection = $(".human-btn");
+    // $humanSelection.on("click", function() {
+    //     // TODO: Construct human player
+    // });
+
+    // var $aiSelection = $(".ai-btn");
+    // $aiSelection.on("click", function() {
+    //     // TODO: Construct ai player
+    // });
 }); 
