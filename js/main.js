@@ -21,11 +21,20 @@ $(document).ready(function() {
         aiFactory: function(name) {
             var ai = Player.playerFactory(name);
             return ai;
+        },
+
+        easyLevel: function() {
+            return;
+        },
+        
+        hardLevel: function() {
+            return;
         }
     };
 
     var Main = { 
         $gameSquare: $(".game-square"),
+        $headingTwo: $("h2"),
         winnings: [
             [0,1,2],
             [3,4,5],
@@ -38,23 +47,20 @@ $(document).ready(function() {
         ],
         player1: new Human.humanFactory("Player 1"),
         player2: new Human.humanFactory("Player 2"),
+        ai: new Ai.aiFactory("Computer"),
         turn: true,
 
         proccessTurn: function() { 
             if(Main.turn) {
                 $(this).css({
-                    backgroundImage: "url('./assets/pacman.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
+                    backgroundImage: "url('./assets/pacman.png')"
                 });
                 Main.turn = false;
                 Main.player1.moves.push(parseInt($(this).attr("data-value")));
                 Main.checkWinCondition(Main.player1);
             } else {           
                 $(this).css({
-                    backgroundImage: "url('./assets/ghost.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
+                    backgroundImage: "url('./assets/ghost.png')"
                 });
                 Main.turn = true;
                 Main.player2.moves.push(parseInt($(this).attr("data-value")));
@@ -63,29 +69,40 @@ $(document).ready(function() {
         },
 
         checkWinCondition: function(player) {
-            // TODO: Create 'draw' functionality
+            // TODO: Implement draw functionality
             if(player.moves.length >= 3) {
                 for(var i=0; i < this.winnings.length; i++) {
                     var winCheck = player.moves.filter(function(value) {
                         return Main.winnings[i].indexOf(value) > -1;
                     }).length == Main.winnings[i].length;
                     if(winCheck) { 
-                        player.winCount++;                   
-                        Main.resetGame();
+                        player.winCount++;
+                        Main.outputWinner(player);
                     }
                 }
             }
         },
 
+        outputWinner: function(player) {
+            this.$headingTwo.text(player.name + " is the winner!");
+        },
+
         resetGame: function() {
-            console.log("Game reset");
-            this.player1.moves = [];
-            this.player2.moves = [];
-            this.$gameSquare.css({backgroundImage: "none"});
+            Main.player1.moves = [];
+            Main.player2.moves = [];
+            Main.$gameSquare.css({backgroundImage: "none"});
             Main.$gameSquare.off();
+            Main.turn = true;
             Main.$gameSquare.one("click", Main.proccessTurn);
-        }       
+            Main.$headingTwo.text("Who will win?");
+        }
     };
     Main.$gameSquare.one("click", Main.proccessTurn);
+
+    //------UI CONTROLS-------
+    var $resetBtn = $("#reset-btn");
+    $resetBtn.on("click", Main.resetGame);
+
+    
 
 }); 

@@ -1,10 +1,25 @@
+body {
+    background-image: url("../assets/bg.jpg");
+    background-position: 10px -300px;
+    line-height: 50px;
+}
+
 header {
     margin: 30px auto 20px auto;
     text-align: center;
 }
 
 h1 {
-    font-size: 60px;
+    font-size: 40px;
+    color: white;
+    margin-bottom: 15px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+h2 {
+    color: white;
+    font-size: 25px;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .container {
@@ -16,7 +31,7 @@ h1 {
     height: 600px;
     display: table;
     border-spacing: 5px;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
 }
 
 .row {
@@ -26,16 +41,36 @@ h1 {
 
 .game-square {
     display: table-cell;
-    border: 2px solid red;
+    border: 2px solid white;
     width: 300px;
+    background-color: rgba(0, 51, 153, .4);
+    background-size: cover;
+    background-position: center;
 }
 
 .player {
     padding: 10px;
     display: inline-block;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .player2 {
     float: right;
+}
+
+#reset-btn {
+    border: 2px solid red;
+    background-color: black;
+    color: white;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+#reset-btn:hover {
+    border: 2px solid red;
+    background-color: red;
+    color: black;
 }
