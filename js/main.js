@@ -78,6 +78,7 @@ $(document).ready(function() {
                     if(winCheck) { 
                         player.winCount++;
                         Main.outputWinner(player);
+                        Main.$gameSquare.off();
                     }
                 }
             }
@@ -85,6 +86,10 @@ $(document).ready(function() {
 
         outputWinner: function(player) {
             this.$headingTwo.text(player.name + " is the winner!");
+            var p1WinCounter = $("#p1-score");
+            var p2WinCounter = $("#p2-score");
+            p1WinCounter.text(Main.player1.winCount);
+            p2WinCounter.text(Main.player2.winCount);
         },
 
         resetGame: function() {
@@ -97,12 +102,20 @@ $(document).ready(function() {
             Main.$headingTwo.text("Who will win?");
         }
     };
+    
+    //------UI CONTROLS-------
     Main.$gameSquare.one("click", Main.proccessTurn);
 
-    //------UI CONTROLS-------
     var $resetBtn = $("#reset-btn");
     $resetBtn.on("click", Main.resetGame);
-
     
+    var $humanSelection = $(".human-btn");
+    $humanSelection.on("click", function() {
+        // TODO: Construct human player
+    });
 
+    var $aiSelection = $(".ai-btn");
+    $aiSelection.on("click", function() {
+        // TODO: Construct ai player
+    });
 }); 
