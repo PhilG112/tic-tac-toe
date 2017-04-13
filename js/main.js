@@ -25,11 +25,13 @@ $(document).ready(function() {
         },
 
         easyLevel: function() {
+            // TODO: Implement easy AI functionality
             var value = Math.floor((Math.random() * 8) + 1);
-
+            return;
         },
         
         hardLevel: function() {
+            // TODO: Implement hard AI functionality
             return;
         }
     };
