@@ -20,12 +20,13 @@ $(document).ready(function() {
 
     var Ai = {
         aiFactory: function(name) {
-            var ai = Player.playerFactory(name);
+            var ai = Player.playerFactory(name); // Base call
             return ai;
         },
 
         easyLevel: function() {
-            return;
+            var value = Math.floor((Math.random() * 8) + 1);
+
         },
         
         hardLevel: function() {
@@ -46,10 +47,11 @@ $(document).ready(function() {
             [0,4,8],
             [2,4,6]
         ],
-        player1: new Human.humanFactory("Player 1"),
-        player2: new Human.humanFactory("Player 2"),
+        player1: new Human.humanFactory("Player1"),
+        player2: new Human.humanFactory("Player2"),
         ai: new Ai.aiFactory("Computer"),
         turn: true,
+        isAi: false,
 
         proccessTurn: function() { 
             if(Main.turn) {
@@ -57,29 +59,37 @@ $(document).ready(function() {
                     backgroundImage: "url('./assets/pacman.png')"
                 });
                 Main.turn = false;
-                Main.player1.moves.push(parseInt($(this).attr("data-value")));
-                Main.checkWinCondition(Main.player1);
-            } else {           
+                var p1Value = parseInt($(this).attr("data-value"));
+                Main.addMove(Main.player1, p1Value);
+                if(Main.isAi) {
+                    Main.turn = true;
+                    var aiValue = Ai.easyLevel();
+                    Main.addMove(Main.Ai, aiValue);
+                }
+            } else {
                 $(this).css({
                     backgroundImage: "url('./assets/ghost.png')"
                 });
                 Main.turn = true;
-                Main.player2.moves.push(parseInt($(this).attr("data-value")));
-                Main.checkWinCondition(Main.player2);
+                var p2Value = parseInt($(this).attr("data-value"));
+                Main.addMove(Main.player2, p2Value);
             }
         },
 
+        addMove: function(player, value) {
+            player.moves.push(value);
+            Main.checkWinCondition(player);
+        },
+
         checkWinCondition: function(player) {
-            // TODO: Implement draw functionality
-            var pMoves = player.moves.length;
-            for(var i=0; i < this.winnings.length; i++) {
+            for(var i = 0; i < this.winnings.length; i++) {
                 var winCheck = player.moves.filter(function(value) {
                     return Main.winnings[i].indexOf(value) > -1;
                 }).length == Main.winnings[i].length;
                 if(winCheck) { 
                     player.winCount++;
-                    Main.outputWinner(player);
                     Main.$gameSquare.off();
+                    Main.outputWinner(player);
                 }
             }
         },
@@ -92,7 +102,7 @@ $(document).ready(function() {
             p2WinCounter.text(Main.player2.winCount);
         },
 
-        resetGame: function() {
+        resetBoard: function() {
             Main.player1.moves = [];
             Main.player2.moves = [];
             Main.$gameSquare.css({backgroundImage: "none"});
@@ -100,6 +110,15 @@ $(document).ready(function() {
             Main.turn = true;
             Main.$gameSquare.one("click", Main.proccessTurn);
             Main.$headingTwo.text("Who will win?");
+        },
+
+        resetWinCount: function() {
+            var p1WinCounter = $("#p1-score");
+            var p2WinCounter = $("#p2-score");
+            Main.player1.winCount = 0;
+            Main.player2.winCount = 0;
+            p1WinCounter.text("0");
+            p2WinCounter.text("0");
         }
     };
     
@@ -107,25 +126,22 @@ $(document).ready(function() {
     Main.$gameSquare.one("click", Main.proccessTurn);
 
     var $resetBtn = $("#reset-game");
-    $resetBtn.on("click", Main.resetGame);
+    $resetBtn.on("click", Main.resetBoard);
 
-    var $resetScores = $("#reset-count");
-    $resetScores.on("click", function() {
-        var p1WinCounter = $("#p1-score");
-        var p2WinCounter = $("#p2-score");
-        Main.player1.winCount = 0;
-        Main.player2.winCount = 0;
-        p1WinCounter.text("0");
-        p2WinCounter.text("0");
-    })
-    
-    // var $humanSelection = $(".human-btn");
-    // $humanSelection.on("click", function() {
-    //     // TODO: Construct human player
-    // });
+    var $resetWinCount = $("#reset-count");
+    $resetWinCount.on("click", Main.resetWinCount);
 
-    // var $aiSelection = $(".ai-btn");
-    // $aiSelection.on("click", function() {
-    //     // TODO: Construct ai player
-    // });
+    var $humanBtn = $(".human-btn");
+    $humanBtn.on("click", function() {
+        var p2 = $(".player2-name");
+        p2.text(Main.player2.name);
+        Main.isAi = false;
+    });
+
+    var $aiBtn = $(".ai-btn");
+    $aiBtn.on("click", function() {
+        var p2 = $(".player2-name");
+        p2.text(Main.ai.name);
+        Main.isAi = true;
+    });
 }); 

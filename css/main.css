@@ -1,12 +1,12 @@
 body {
     background-image: url("../assets/bg.jpg");
-    background-position: center;
+    background-position: cover;
     line-height: 50px;
     font-family: 'Press Start 2P', cursive;
 }
 
 header {
-    margin: 30px auto 5px auto;
+    margin: 20px auto 5px auto;
     text-align: center;
 }
 
@@ -38,7 +38,7 @@ h3 {
     height: 600px;
     display: table;
     border-spacing: 5px;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 10px auto;
 }
 
 .row {
@@ -56,10 +56,10 @@ h3 {
 }
 
 .player {
-    padding: 10px;
     display: inline-block;
     font-size: 20px;
     color: white;
+    padding: 0 10px 0 10px;
 }
 
 .player1 {
@@ -92,7 +92,7 @@ button:hover {
 }
 
 .game-settings {
-    margin: 0 auto 20px auto;
+    margin: 0 auto 10px auto;
     text-align: center;
 }
 
